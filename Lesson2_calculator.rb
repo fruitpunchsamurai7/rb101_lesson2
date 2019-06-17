@@ -9,7 +9,3 @@ Kernel.puts("What's the first number?")
 number1=Kernel.gets().chomp()
 
 Kernel.puts("the number is: " + number1+"!")
-puts("ok!")
-puts("Ali")
-puts
-puts("a")
