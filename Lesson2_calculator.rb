@@ -12,3 +12,4 @@ Kernel.puts("the number is: " + number1+"!")
 puts("ok!")
 puts("Ali")
 puts
+puts("a")
