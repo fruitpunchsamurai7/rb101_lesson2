@@ -8,4 +8,7 @@ Kernel.puts("Welcome to Calculator")
 Kernel.puts("What's the first number?")
 number1=Kernel.gets().chomp()
 
-Kernel.puts("the number is: " + number1+"!")
+Kernel.puts("What's the second number?")
+number2=Kernel.gets().chomp()
+
+Kernel.puts(number1+" "+number2)
