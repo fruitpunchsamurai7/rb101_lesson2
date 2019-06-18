@@ -20,17 +20,15 @@ prompt(number1+" "+number2)
 prompt("what would you like to do? 1) Add 2) Subtract 3) Multiply 4) Divide")
 operator=Kernel.gets().chomp()
 
-if operator =='1'
-  result=number1.to_i+number2.to_i
-elsif
-  operator=='2'
-  result=number1.to_i-number2.to_i
-elsif
-  operator=='3'
-  result=number1.to_i*number2.to_i
-elsif
-  operator=='4'
-  result=number1.to_f/number2.to_f
-end
 
+result=case operator
+       when '1'
+         number1.to_i()+number2.to_i()
+       when '2'
+         number1.to_i()-number2.to_i()
+       when '3'
+         number1.to_i()*number2.to_i()
+       when '4'
+         number1.to_f()/number2.to_f()
+       end
 prompt("The result is #{result}")
