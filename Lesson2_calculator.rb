@@ -2,18 +2,22 @@
 # ask the user for an operation to perform
 # perform the operation on the two numbers
 # output the result
+def prompt(message)
+  Kernel.puts("=> #{message}")
+end
 
-Kernel.puts("Welcome to Calculator")
 
-Kernel.puts("What's the first number?")
+prompt("Welcome to calculator")
+
+prompt("What's the first number?")
 number1=Kernel.gets().chomp()
 
-Kernel.puts("What's the second number?")
+prompt("What's the second number?")
 number2=Kernel.gets().chomp()
 
-Kernel.puts(number1+" "+number2)
+prompt(number1+" "+number2)
 
-Kernel.puts("what would you like to do? 1) Add 2) Subtract 3) Multiply 4) Divide")
+prompt("what would you like to do? 1) Add 2) Subtract 3) Multiply 4) Divide")
 operator=Kernel.gets().chomp()
 
 if operator =='1'
@@ -29,4 +33,4 @@ elsif
   result=number1.to_f/number2.to_f
 end
 
-Kernel.puts("The result is #{result}")
+prompt("The result is #{result}")
