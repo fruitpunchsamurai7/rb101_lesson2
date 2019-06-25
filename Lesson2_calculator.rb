@@ -9,9 +9,21 @@ def valid_number?(num)
   num.to_i() != 0
 end
 
-prompt("Welcome to calculator")
+prompt("Welcome to calculator, enter your name:")
 
+name=''
 loop do
+  name=Kernel.gets().chomp()
+
+  if name.empty?()
+    prompt("Make sure you've entered your name.")
+  else
+    break
+  end
+end
+
+prompt("Hi #{name}!")
+loop do #main loop
     number1='1'
     loop do
       prompt("What's the first number?")
@@ -39,7 +51,17 @@ loop do
     prompt(number1+" "+number2)
 
     prompt("what would you like to do? 1) Add 2) Subtract 3) Multiply 4) Divide")
-    operator=Kernel.gets().chomp()
+
+    operator=''
+    loop do
+      operator=Kernel.gets().chomp()
+      if %w(1 2 3 4).include?(operator)
+        break
+      else
+        prompt("must choose 1,2,3,4")
+      end
+    end
+
 
 
     result=case operator
