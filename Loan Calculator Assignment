@@ -1,90 +1,112 @@
-def validate?(integer)
-  integer.to_i.to_s==integer &&  integer.size >0 && integer.to_i>0
+def valid_amount?(integer)
+  integer.to_i.to_s == integer && integer.to_i > 0 && integer.to_i > 0
 end
 
 def valid_flt?(float)
-  float.to_f.to_s==float && float.size>0 && float.to_f>0
+  float.to_f.to_s == float && float.to_f > 0 && float.to_f > 0
+end
+
+def valid_term?(integer)
+  integer.to_i.to_s == integer && integer.to_i > 0 && integer.to_i > 0
 end
 
 def valid_response?(response)
-  ["y","n","yes","no"].include? response
+  %w(y n yes no).include? response
 end
 
+def retrieve_loan_amount
+  amount = ''
+  loop do
+    amount = gets.chomp
+    break if valid_amount?(amount) || valid_flt?(amount)
+    puts 'Please enter a valid amount: '
+  end
+  amount
+end
 
+def retrieve_interest
+  interest = ''
+  loop do
+    interest = gets.chomp
+    break if valid_flt?(interest)
+    puts 'Please enter a valid rate (eg. 2.5, 9.0, 10.44) : '
+  end
+  interest
+end
+
+def retrieve_term
+  months = ''
+  loop do
+    months = gets.chomp
+    break if valid_term?(months)
+    puts 'Please enter a valid figure in months: '
+  end
+  months
+end
+
+def loan_calculation(amount, interest, months)
+  amount = amount.to_f
+  interest = interest.to_f
+  months = months.to_i
+
+  annual_rate = interest.to_f / 100
+  monthly_rate = annual_rate / 12
+
+  monthly_payment = amount.to_f * (
+  monthly_rate /
+      (1 - (1 + monthly_rate)**-months.to_i))
+
+  puts "Your monthly payment is: $#{format('%02.2f', monthly_payment)}"
+end
+
+def validate_response(response)
+  loop do
+    response = gets.downcase.chomp
+    puts 'Please select - (Yes/No/Y/N)' if valid_response?(response) == false
+    break if (response == 'yes') || (response == 'y')
+    return unless (response == 'no') || (response == 'n')
+    puts 'Thank you for using the calculator. Goodbye!'
+    break
+  end
+  response
+end
+
+def retrieve_play_again_answer
+  response = ''
+  validate_response(response)
+end
+
+#--------------------------------------------------------------------
+# Begin Program
 loop do
   puts("-----Welcome to the car loan calculator-------\n")
-  amount = ''
-  interest = ''
-  term = ''
-  @response=''
 
   loop do
     #-----------------------------------------------------------------
     # Get user input for loan amount & validate.
     puts('Please enter the total amount of the car loan: ')
-    loop do
-      amount=gets.chomp
-      if validate?(amount)==false
-        puts ('Please enter a valid amount: ')
-      else
-        break
-      end
-    end
-
+    amount = retrieve_loan_amount
     #-----------------------------------------------------------------
     # Get user input for interest & validate.
     puts 'Enter interest rate- APR (eg. 2.5, 9.0, 10.44) :'
-    loop do
-      interest=gets.chomp
-      if valid_flt?(interest)==false
-        puts ('Please enter a valid rate (eg. 2.5, 9.0, 10.44) : ')
-      else
-        break
-      end
-    end
+    interest = retrieve_interest
 
     #-----------------------------------------------------------------
     # Get loan duration in months & validate
     puts 'Enter length of term as number of months: '
-    loop do
-      term=gets.chomp
-      if validate?(term)==false
-        puts ('Please enter a valid figure in months: ')
-      else
-        break
-      end
-    end
+    months = retrieve_term
 
     #-----------------------------------------------------------------
     # Monthly Payment calculation
-    annual_rate = interest.to_f / 100
-    monthly_rate = annual_rate / 12
-
-    monthly_payment = amount.to_f * (
-    monthly_rate /
-        (1 - (1 + monthly_rate)**-term.to_i))
-
-    puts "Your monthly payment is: $#{format('%02.2f', monthly_payment)}"
+    loan_calculation(amount, interest, months)
     break
   end
 
   #-----------------------------------------------------------------
   # Ask user to re-run the calculation, otherwise end.
   puts 'Would you like to run another calculation? (Yes/No/Y/N)'
+  response = retrieve_play_again_answer
 
-  loop do
-    $response=gets.downcase.chomp
-    puts "Please select a valid response - (Yes/No/Y/N)" if valid_response?($response)==false
-    if (($response == 'yes') || ($response == 'y'))
-      break
-    elsif  (($response == 'no') || ($response == 'n'))
-      puts 'Thank you for using the calculator. Goodbye!'
-      break
-    end
-  end
-  if (($response == 'no' )|| ($response == 'n'))
-    break
-  else
-    system "cls"
-  end
+  break if (response == 'no') || (response == 'n')
+  system 'cls' || 'clear'
 end
